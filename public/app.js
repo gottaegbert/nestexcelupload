@@ -22,16 +22,27 @@ async function uploadFiles() {
 
     const result = await response.json();
     console.log('Files uploaded successfully:', result);
-    alert('Files uploaded successfully!');
-
-    // Display the JSON data
+// Transform and display the JSON data
+    const transformedData = transformData(result);
     const displayArea = document.getElementById('excelData');
-    const formattedData = JSON.stringify(result, null, 2);
+    const formattedData = JSON.stringify(transformedData, null, 2);
     displayArea.innerHTML = `<pre>${formattedData}</pre>`;
-
-    alert('Files uploaded successfully!');
   } catch (err) {
     console.error('Error uploading files:', err);
     alert('Error uploading files. See console for more information.');
   }
+}
+
+function transformData(receivedData) {
+  return receivedData[0].map((item) => ({
+    title: item['主标题'],
+    subTitle: item['副标题'],
+    list: item['列表标题']
+      .split('\r\n')
+      .filter((title) => title)
+      .map((title, index) => ({
+        title: title,
+        content: item['列表内容'].split('\r\n')[index].trim(),
+      })),
+  }));
 }

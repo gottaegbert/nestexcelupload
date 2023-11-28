@@ -19,9 +19,6 @@ export class FileUploadService {
     });
     const finaldata = await this.transformData(results);
     return finaldata;
-    // // Assuming all files are structured the same way and you want to combine them
-    // const combinedData = [].concat(...results);
-    // return combinedData;
   }
 
   private transformData(jsonData: any[]): any {
@@ -30,11 +27,11 @@ export class FileUploadService {
         title: item['主标题'],
         subTitle: item['副标题'],
         list: item['列表标题']
-          .split('\r\n')
+          .split('\\r\\n')
           .filter((title) => title)
           .map((title, index) => ({
             title: title,
-            content: item['列表内容'].split('\r\n')[index].trim(),
+            content: item['列表内容'].split('\\r\\n')[index].trim(),
           })),
       })),
     };
