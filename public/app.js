@@ -23,6 +23,10 @@ async function uploadFiles() {
     const result = await response.json();
     console.log('Files uploaded successfully:', result);
     alert('Files uploaded successfully!');
+    const displayArea = document.getElementById('excelData');
+    displayArea.innerHTML = `<pre>${JSON.stringify(result, null, 2)}</pre>`;
+
+    alert('Files uploaded successfully!');
   } catch (err) {
     console.error('Error uploading files:', err);
     alert('Error uploading files. See console for more information.');
