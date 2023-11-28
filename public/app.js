@@ -1,3 +1,4 @@
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 async function uploadFiles() {
   const input = document.getElementById('fileInput');
   if (!input.files.length) {
@@ -22,7 +23,7 @@ async function uploadFiles() {
 
     const result = await response.json();
     console.log('Files uploaded successfully:', result);
-// Transform and display the JSON data
+
     const transformedData = transformData(result);
     const displayArea = document.getElementById('excelData');
     const formattedData = JSON.stringify(transformedData, null, 2);

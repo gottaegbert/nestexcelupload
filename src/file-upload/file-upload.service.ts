@@ -7,13 +7,13 @@ export class FileUploadService {
   async processAndTransformFiles(
     files: Array<Express.Multer.File>,
   ): Promise<any> {
-    // Your logic to process and transform the files goes here
+    // process and transform the files goes here
     const results = files.map((file) => {
       const workbook = XLSX.read(file.buffer, { type: 'buffer' });
       const sheetName = workbook.SheetNames[0];
       const worksheet = workbook.Sheets[sheetName];
       const jsonData = XLSX.utils.sheet_to_json(worksheet);
-      // Transform jsonData into your desired structure
+      // Transform jsonData to the desired format
       const structuredData = this.transformData(jsonData);
       return structuredData;
     });
