@@ -17,15 +17,26 @@ export class FileUploadService {
       const structuredData = this.transformData(jsonData);
       return structuredData;
     });
-
-    // Assuming all files are structured the same way and you want to combine them
-    const combinedData = [].concat(...results);
-    return combinedData;
+    const finaldata = await this.transformData(results);
+    return finaldata;
+    // // Assuming all files are structured the same way and you want to combine them
+    // const combinedData = [].concat(...results);
+    // return combinedData;
   }
 
   private transformData(jsonData: any[]): any {
-    // Implement the transformation logic to match the structure needed
-    // This would depend on the format of your Excel files and the desired JSON structure
-    return jsonData; // Placeholder, implement your actual transformation logic
+    return {
+      data: jsonData.map((item) => ({
+        title: item['主标题'],
+        subTitle: item['副标题'],
+        list: item['列表标题']
+          .split('\r\n')
+          .filter((title) => title)
+          .map((title, index) => ({
+            title: title,
+            content: item['列表内容'].split('\r\n')[index].trim(),
+          })),
+      })),
+    };
   }
 }
